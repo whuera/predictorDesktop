@@ -69,7 +69,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jButtonExecuteSearch = new javax.swing.JButton();
         jPanelAbout = new javax.swing.JPanel();
         jScrollPanelPdfViewer = new javax.swing.JScrollPane();
 
@@ -168,12 +168,12 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel6.setText("Hora:");
 
-        jButton2.setText("Buscar");
-        jButton2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton2.setBorderPainted(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExecuteSearch.setText("Buscar");
+        jButtonExecuteSearch.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButtonExecuteSearch.setBorderPainted(false);
+        jButtonExecuteSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonExecuteSearchActionPerformed(evt);
             }
         });
 
@@ -194,7 +194,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(jLabel6)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonExecuteSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSpinnerParam, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jDateChooserParam, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
                     .addComponent(jTextFieldPlaca, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -216,7 +216,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(jSpinnerParam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonExecuteSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(248, Short.MAX_VALUE))
         );
 
@@ -286,10 +286,10 @@ public class MainWindow extends javax.swing.JFrame {
      *
      * @param evt the evt
      */
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:        
+    private void jButtonExecuteSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExecuteSearchActionPerformed
+      
       this.executeProcess();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonExecuteSearchActionPerformed
 
     /**
      * J button about action performed.
@@ -328,10 +328,8 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Execute process.
      */
-    public void executeProcess(){
-        
-       
-         if (jTextFieldPlaca.getText().replace("-", "").trim().length()>4 && !jTextFieldPlaca.getText().replace("-", "").trim().equalsIgnoreCase("") && !jTextFieldPlaca.getText().isEmpty() && !jTextFieldPlaca.getText().equalsIgnoreCase(null) && !jTextFieldPlaca.getText().equalsIgnoreCase("") && jSpinnerParam.getValue().toString() != null){
+    public void executeProcess(){               
+         if (jTextFieldPlaca.getText().replace("-", "").trim().length()>4 && !jTextFieldPlaca.getText().replace("-", "").trim().equalsIgnoreCase("") && !jTextFieldPlaca.getText().isEmpty() && !jTextFieldPlaca.getText().equalsIgnoreCase(null) && !jTextFieldPlaca.getText().equalsIgnoreCase("") && jSpinnerParam.getValue().toString() != null){             
             Calendar dateInput = jDateChooserParam.getCalendar();
             ServicePredictorPicoPlaca bussinesRule = new ServicePredictorPicoPlaca();
             PicoPlacaForm picoPlacaForm = new PicoPlacaForm();
@@ -416,63 +414,25 @@ public class MainWindow extends javax.swing.JFrame {
 
     /** The j button 2. */
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    
-    /** The j button about. */
     private javax.swing.JButton jButtonAbout;
-    
-    /** The j button menu buscar. */
+    private javax.swing.JButton jButtonExecuteSearch;
     private javax.swing.JButton jButtonMenuBuscar;
-    
-    /** The j date chooser param. */
     private com.toedter.calendar.JDateChooser jDateChooserParam;
-    
-    /** The j label 1. */
     private javax.swing.JLabel jLabel1;
-    
-    /** The j label 3. */
     private javax.swing.JLabel jLabel3;
-    
-    /** The j label 4. */
     private javax.swing.JLabel jLabel4;
-    
-    /** The j label 5. */
     private javax.swing.JLabel jLabel5;
-    
-    /** The j label 6. */
     private javax.swing.JLabel jLabel6;
-    
-    /** The j label 7. */
     private javax.swing.JLabel jLabel7;
-    
-    /** The j panel about. */
     private javax.swing.JPanel jPanelAbout;
-    
-    /** The j panel dashboard. */
     private javax.swing.JPanel jPanelDashboard;
-    
-    /** The j panel detail. */
     private javax.swing.JPanel jPanelDetail;
-    
-    /** The j panel head. */
     private javax.swing.JPanel jPanelHead;
-    
-    /** The j panel master. */
     private javax.swing.JPanel jPanelMaster;
-    
-    /** The j panel menu. */
     private javax.swing.JPanel jPanelMenu;
-    
-    /** The j scroll panel pdf viewer. */
     private javax.swing.JScrollPane jScrollPanelPdfViewer;
-    
-    /** The j spinner param. */
     private javax.swing.JSpinner jSpinnerParam;
-    
-    /** The j text field placa. */
     private javax.swing.JFormattedTextField jTextFieldPlaca;
-    
-    /** The j tool bar 1. */
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }
