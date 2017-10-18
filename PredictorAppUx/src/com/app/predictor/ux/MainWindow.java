@@ -54,6 +54,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jPanelMenu = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jButtonMenuBuscar = new javax.swing.JButton();
@@ -65,11 +66,13 @@ public class MainWindow extends javax.swing.JFrame {
         Date date = new Date();
         SpinnerDateModel sm = new SpinnerDateModel(date,null,null,Calendar.HOUR_OF_DAY);
         jSpinnerParam = new javax.swing.JSpinner(sm);
-        jTextFieldPlaca = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jButtonExecuteSearch = new javax.swing.JButton();
+        jTextFieldPlaca = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
         jPanelAbout = new javax.swing.JPanel();
         jScrollPanelPdfViewer = new javax.swing.JScrollPane();
 
@@ -79,8 +82,8 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanelHead.setBackground(new java.awt.Color(0, 51, 51));
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
         jLabel3.setText("Prototype Program");
 
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -88,7 +91,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Predictor de Pico y Placa");
+        jLabel1.setText("Predictor Pico-Placa");
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel8.setText("Valid for Ecuador Country");
 
         javax.swing.GroupLayout jPanelHeadLayout = new javax.swing.GroupLayout(jPanelHead);
         jPanelHead.setLayout(jPanelHeadLayout);
@@ -98,24 +105,28 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(jPanelHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelHeadLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addGroup(jPanelHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
                         .addContainerGap(84, Short.MAX_VALUE))
                     .addGroup(jPanelHeadLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanelHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanelHeadLayout.setVerticalGroup(
             jPanelHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelHeadLayout.createSequentialGroup()
-                .addGroup(jPanelHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelHeadLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(1, 1, 1)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addContainerGap())
         );
 
         jPanelMenu.setLayout(new java.awt.BorderLayout());
@@ -156,12 +167,6 @@ public class MainWindow extends javax.swing.JFrame {
         JSpinner.DateEditor de = new JSpinner.DateEditor(jSpinnerParam,"HH:mm:ss");
         jSpinnerParam.setEditor(de);
 
-        try {
-            jTextFieldPlaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("***-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
         jLabel4.setText("Placa:");
 
         jLabel5.setText("Fecha:");
@@ -177,6 +182,20 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        jTextFieldPlaca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPlacaActionPerformed(evt);
+            }
+        });
+        jTextFieldPlaca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldPlacaKeyPressed(evt);
+            }
+        });
+
+        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel2.setText("Ejm:PCD402 or PCD4003");
+
         javax.swing.GroupLayout jPanelDashboardLayout = new javax.swing.GroupLayout(jPanelDashboard);
         jPanelDashboard.setLayout(jPanelDashboardLayout);
         jPanelDashboardLayout.setHorizontalGroup(
@@ -184,29 +203,36 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(jPanelDashboardLayout.createSequentialGroup()
                 .addGroup(jPanelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelDashboardLayout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanelDashboardLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel5))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDashboardLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel6)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonExecuteSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSpinnerParam, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateChooserParam, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                    .addComponent(jTextFieldPlaca, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(659, Short.MAX_VALUE))
+                        .addGroup(jPanelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelDashboardLayout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(jLabel4))
+                            .addGroup(jPanelDashboardLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel5))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDashboardLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel6)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonExecuteSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSpinnerParam, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jDateChooserParam, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                            .addComponent(jTextFieldPlaca))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 406, Short.MAX_VALUE))
+                    .addComponent(jSeparator1))
+                .addContainerGap())
         );
         jPanelDashboardLayout.setVerticalGroup(
             jPanelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelDashboardLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(jPanelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
                     .addComponent(jTextFieldPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jDateChooserParam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,7 +243,9 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonExecuteSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(248, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(226, Short.MAX_VALUE))
         );
 
         jPanelDetail.add(jPanelDashboard, "card2");
@@ -259,7 +287,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(jPanelHead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(395, Short.MAX_VALUE))
+                .addContainerGap(397, Short.MAX_VALUE))
             .addGroup(jPanelMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMasterLayout.createSequentialGroup()
                     .addGap(0, 144, Short.MAX_VALUE)
@@ -287,8 +315,14 @@ public class MainWindow extends javax.swing.JFrame {
      * @param evt the evt
      */
     private void jButtonExecuteSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExecuteSearchActionPerformed
-      
+      try{
       this.executeProcess();
+      }catch(Exception ex){
+          ex.getMessage();
+      }
+      finally{
+          jTextFieldPlaca.setText(null);
+      }
     }//GEN-LAST:event_jButtonExecuteSearchActionPerformed
 
     /**
@@ -322,19 +356,29 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelDetail.add(jPanelDashboard);
         jPanelDetail.repaint();
         jPanelDetail.revalidate();
-        
+        jTextFieldPlaca.requestFocus();
     }//GEN-LAST:event_jButtonMenuBuscarActionPerformed
+
+    private void jTextFieldPlacaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPlacaKeyPressed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jTextFieldPlacaKeyPressed
+
+    private void jTextFieldPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPlacaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPlacaActionPerformed
 
     /**
      * Execute process.
      */
-    public void executeProcess(){               
-         if (jTextFieldPlaca.getText().replace("-", "").trim().length()>4 && !jTextFieldPlaca.getText().replace("-", "").trim().equalsIgnoreCase("") && !jTextFieldPlaca.getText().isEmpty() && !jTextFieldPlaca.getText().equalsIgnoreCase(null) && !jTextFieldPlaca.getText().equalsIgnoreCase("") && jSpinnerParam.getValue().toString() != null){             
+    public void executeProcess(){       
+        String input = jTextFieldPlaca.getText().replace(" ", "").trim();
+         if (!jTextFieldPlaca.getText().isEmpty() && input.length()>=6){                         
             Calendar dateInput = jDateChooserParam.getCalendar();
             ServicePredictorPicoPlaca bussinesRule = new ServicePredictorPicoPlaca();
             PicoPlacaForm picoPlacaForm = new PicoPlacaForm();
             picoPlacaForm.setDateQuestion(dateInput);
-            picoPlacaForm.setNumber(jTextFieldPlaca.getText().replace("-",""));
+            picoPlacaForm.setNumber(jTextFieldPlaca.getText().replace(" ",""));
             DateFormat df = new SimpleDateFormat("HH:mm");
             Date today = (Date) jSpinnerParam.getValue();
             String reportDate = df.format(today);
@@ -354,6 +398,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         }else{
             showMessageDialog(null, "Revise los parametros de ingreso");
+            jTextFieldPlaca.requestFocus();
         }
     }
     
@@ -419,11 +464,13 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButtonMenuBuscar;
     private com.toedter.calendar.JDateChooser jDateChooserParam;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanelAbout;
     private javax.swing.JPanel jPanelDashboard;
     private javax.swing.JPanel jPanelDetail;
@@ -431,8 +478,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelMaster;
     private javax.swing.JPanel jPanelMenu;
     private javax.swing.JScrollPane jScrollPanelPdfViewer;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSpinner jSpinnerParam;
-    private javax.swing.JFormattedTextField jTextFieldPlaca;
+    private javax.swing.JTextField jTextFieldPlaca;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }
