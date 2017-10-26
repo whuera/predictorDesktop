@@ -5,6 +5,9 @@
  */
 package com.app.predictor.ux;
 
+import com.app.modelo.AddressContact;
+import com.app.modelo.Contacto;
+import com.app.modelo.InformacionFinanciera;
 import static javax.swing.JOptionPane.showMessageDialog;
 import java.io.IOException;
 import java.net.URL;
@@ -24,6 +27,24 @@ import org.icepdf.ri.common.SwingViewBuilder;
 import org.xml.sax.SAXException;
 import com.app.predictor.model.PicoPlacaForm;
 import com.app.predictor.service.ServicePredictorPicoPlaca;
+import com.app.service.impl.ServiceAddressContact;
+import com.app.service.impl.ServiceContact;
+import com.app.service.impl.ServiceProducts;
+import com.mp.mail.ControllerEmailTemplate;
+import java.awt.BorderLayout;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.general.DefaultPieDataset;
+
+
 
 
 /**
@@ -32,6 +53,9 @@ import com.app.predictor.service.ServicePredictorPicoPlaca;
  * @author root
  */
 public class MainWindow extends javax.swing.JFrame {
+
+    private javax.swing.JButton btnaddress;
+    private JButton jButtonInfoFinance;
 
     /**
      * Creates new form MainWindow.
@@ -52,14 +76,35 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelMaster = new javax.swing.JPanel();
         jPanelHead = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jPanelMenu = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jButtonMenuBuscar = new javax.swing.JButton();
         jButtonAbout = new javax.swing.JButton();
+        jButtonSendMail = new javax.swing.JButton();
+        jButtonConsulta = new javax.swing.JButton();
+        jButtonFacturacion = new javax.swing.JButton();
         jPanelDetail = new javax.swing.JPanel();
+        jPanelConsulta = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jFormattedTextFieldConsulta = new javax.swing.JFormattedTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableConsulta = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableDirecciones = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableProductoFinanciero = new javax.swing.JTable();
+        jPanelChart = new javax.swing.JPanel();
+        jPanelAbout = new javax.swing.JPanel();
+        jScrollPanelPdfViewer = new javax.swing.JScrollPane();
+        jPanelSendMail = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jTextFieldEmpresa = new javax.swing.JTextField();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        jComboBoxTipo = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
         jPanelDashboard = new javax.swing.JPanel();
         Date dateParam = new Date();
         jDateChooserParam = new com.toedter.calendar.JDateChooser(dateParam);
@@ -73,60 +118,53 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldPlaca = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jPanelAbout = new javax.swing.JPanel();
-        jScrollPanelPdfViewer = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Predictor PP");
         setResizable(false);
 
-        jPanelHead.setBackground(new java.awt.Color(0, 51, 51));
+        btnaddress = new javax.swing.JButton("Direcciones");
+        btnaddress.setName("consultaContacto");
+
+        jButtonInfoFinance = new javax.swing.JButton("Ver");
+        jButtonInfoFinance.setName("infoFinanciera");
+
+        jPanelHead.setBackground(new java.awt.Color(102, 153, 255));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
         jLabel3.setText("Prototype Program");
 
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("This program is only for example, contains core Java and Architecture client-server with Spring Framework");
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        jLabel1.setText("ReCom");
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Predictor Pico-Placa");
-
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel8.setText("Valid for Ecuador Country");
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dolphin_48x48.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanelHeadLayout = new javax.swing.GroupLayout(jPanelHead);
         jPanelHead.setLayout(jPanelHeadLayout);
         jPanelHeadLayout.setHorizontalGroup(
             jPanelHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelHeadLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(27, 27, 27)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelHeadLayout.createSequentialGroup()
-                        .addGroup(jPanelHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addContainerGap(84, Short.MAX_VALUE))
-                    .addGroup(jPanelHeadLayout.createSequentialGroup()
-                        .addGroup(jPanelHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 801, Short.MAX_VALUE))
         );
         jPanelHeadLayout.setVerticalGroup(
             jPanelHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelHeadLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(1, 1, 1)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelHeadLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(28, 28, 28))
+                    .addGroup(jPanelHeadLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         jPanelMenu.setLayout(new java.awt.BorderLayout());
@@ -156,9 +194,235 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jToolBar1.add(jButtonAbout);
 
+        jButtonSendMail.setText("SendMail");
+        jButtonSendMail.setFocusable(false);
+        jButtonSendMail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonSendMail.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonSendMail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSendMailActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonSendMail);
+
+        jButtonConsulta.setText("Consulta");
+        jButtonConsulta.setFocusable(false);
+        jButtonConsulta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonConsulta.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConsultaActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonConsulta);
+
+        jButtonFacturacion.setText("Facturacion");
+        jButtonFacturacion.setFocusable(false);
+        jButtonFacturacion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonFacturacion.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButtonFacturacion);
+
         jPanelMenu.add(jToolBar1, java.awt.BorderLayout.CENTER);
 
         jPanelDetail.setLayout(new java.awt.CardLayout());
+
+        jLabel11.setText("Ingrese numero de cedula:");
+
+        jButton1.setText("Consultar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jFormattedTextFieldConsulta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jFormattedTextFieldConsultaKeyPressed(evt);
+            }
+        });
+
+        jTableConsulta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "codigo", "Cedula", "Nombres", "Apellidos", "Email", "Telefonos", "Profesion", "opcion"
+            }
+        ));
+        jTableConsulta.setColumnSelectionAllowed(true);
+        jTableConsulta.getTableHeader().setReorderingAllowed(false);
+        jTableConsulta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableConsultaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableConsulta);
+        jTableConsulta.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        jTableDirecciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "codigo", "Principal", "Interseccion", "Referencia", "Numero", "Ciudad", "Tipo", "Informacion Financiera"
+            }
+        ));
+        jTableDirecciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDireccionesMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTableDirecciones);
+
+        jTableProductoFinanciero.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Producto Financiero"
+            }
+        ));
+        jScrollPane3.setViewportView(jTableProductoFinanciero);
+
+        javax.swing.GroupLayout jPanelChartLayout = new javax.swing.GroupLayout(jPanelChart);
+        jPanelChart.setLayout(jPanelChartLayout);
+        jPanelChartLayout.setHorizontalGroup(
+            jPanelChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 495, Short.MAX_VALUE)
+        );
+        jPanelChartLayout.setVerticalGroup(
+            jPanelChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 208, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanelConsultaLayout = new javax.swing.GroupLayout(jPanelConsulta);
+        jPanelConsulta.setLayout(jPanelConsultaLayout);
+        jPanelConsultaLayout.setHorizontalGroup(
+            jPanelConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelConsultaLayout.createSequentialGroup()
+                .addGroup(jPanelConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelConsultaLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel11)
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanelConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addComponent(jFormattedTextFieldConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 577, Short.MAX_VALUE))
+                    .addGroup(jPanelConsultaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanelConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1))))
+                .addContainerGap())
+            .addGroup(jPanelConsultaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58)
+                .addComponent(jPanelChart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelConsultaLayout.setVerticalGroup(
+            jPanelConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelConsultaLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanelConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jFormattedTextFieldConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelChart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(74, Short.MAX_VALUE))
+        );
+
+        jPanelDetail.add(jPanelConsulta, "card5");
+
+        try{
+            URL location = new URL("http://www.mobilpymes.com/CV_WilliamHuera.pdf");
+            this.openPdf(location);}
+        catch(Exception ex){
+            ex.getMessage();
+        }
+        //this.openPdf("CV_WilliamHuera.pdf");
+        //setExtendedState(MAXIMIZED_BOTH);
+
+        javax.swing.GroupLayout jPanelAboutLayout = new javax.swing.GroupLayout(jPanelAbout);
+        jPanelAbout.setLayout(jPanelAboutLayout);
+        jPanelAboutLayout.setHorizontalGroup(
+            jPanelAboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPanelPdfViewer, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)
+        );
+        jPanelAboutLayout.setVerticalGroup(
+            jPanelAboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPanelPdfViewer, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+        );
+
+        jPanelDetail.add(jPanelAbout, "card3");
+
+        jLabel9.setText("Ingresar Empresa:");
+
+        jToggleButton1.setText("Ejecutar");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
+        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EMPPRIV", "COOPAC" }));
+        jComboBoxTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxTipoActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Tipo:");
+
+        javax.swing.GroupLayout jPanelSendMailLayout = new javax.swing.GroupLayout(jPanelSendMail);
+        jPanelSendMail.setLayout(jPanelSendMailLayout);
+        jPanelSendMailLayout.setHorizontalGroup(
+            jPanelSendMailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSendMailLayout.createSequentialGroup()
+                .addGroup(jPanelSendMailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelSendMailLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel9)
+                        .addGap(1, 1, 1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSendMailLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGroup(jPanelSendMailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToggleButton1)
+                    .addComponent(jTextFieldEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(421, Short.MAX_VALUE))
+        );
+        jPanelSendMailLayout.setVerticalGroup(
+            jPanelSendMailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSendMailLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(jPanelSendMailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jTextFieldEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelSendMailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jToggleButton1)
+                .addContainerGap(435, Short.MAX_VALUE))
+        );
+
+        jPanelDetail.add(jPanelSendMail, "card4");
 
         jPanelDashboard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jPanelDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -221,7 +485,7 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(jTextFieldPlaca))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 406, Short.MAX_VALUE))
+                        .addGap(0, 430, Short.MAX_VALUE))
                     .addComponent(jSeparator1))
                 .addContainerGap())
         );
@@ -245,32 +509,10 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(jButtonExecuteSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(226, Short.MAX_VALUE))
+                .addContainerGap(384, Short.MAX_VALUE))
         );
 
         jPanelDetail.add(jPanelDashboard, "card2");
-
-        try{
-            URL location = new URL("http://www.mobilpymes.com/CV_WilliamHuera.pdf");
-            this.openPdf(location);}
-        catch(Exception ex){
-            ex.getMessage();
-        }
-        //this.openPdf("CV_WilliamHuera.pdf");
-        //setExtendedState(MAXIMIZED_BOTH);
-
-        javax.swing.GroupLayout jPanelAboutLayout = new javax.swing.GroupLayout(jPanelAbout);
-        jPanelAbout.setLayout(jPanelAboutLayout);
-        jPanelAboutLayout.setHorizontalGroup(
-            jPanelAboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPanelPdfViewer, javax.swing.GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE)
-        );
-        jPanelAboutLayout.setVerticalGroup(
-            jPanelAboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPanelPdfViewer, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
-        );
-
-        jPanelDetail.add(jPanelAbout, "card3");
 
         javax.swing.GroupLayout jPanelMasterLayout = new javax.swing.GroupLayout(jPanelMaster);
         jPanelMaster.setLayout(jPanelMasterLayout);
@@ -287,11 +529,11 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(jPanelHead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(397, Short.MAX_VALUE))
+                .addContainerGap(560, Short.MAX_VALUE))
             .addGroup(jPanelMasterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMasterLayout.createSequentialGroup()
-                    .addGap(0, 144, Short.MAX_VALUE)
-                    .addComponent(jPanelDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(0, 158, Short.MAX_VALUE)
+                    .addComponent(jPanelDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -368,6 +610,151 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPlacaActionPerformed
 
+    private void jButtonSendMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSendMailActionPerformed
+        // TODO add your handling code here:
+                jPanelDetail.removeAll();
+        jPanelDetail.repaint();
+        jPanelDetail.revalidate();
+        jPanelDetail.add(jPanelSendMail);
+        jPanelDetail.repaint();
+        jPanelDetail.revalidate();
+        
+        
+    }//GEN-LAST:event_jButtonSendMailActionPerformed
+    int  valCombo = 0;
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:                
+        boolean val = ControllerEmailTemplate.mailSenderHelper(jTextFieldEmpresa.getText(),jComboBoxTipo.getItemAt(valCombo));
+        System.out.println("valor combo "+jComboBoxTipo.getItemAt(valCombo));
+                if(val){showMessageDialog(null, "Envio de emails correcto");}
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jComboBoxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoActionPerformed
+        // TODO add your handling code here:
+        valCombo = jComboBoxTipo.getSelectedIndex();
+        System.out.println("valor combo "+valCombo);
+    }//GEN-LAST:event_jComboBoxTipoActionPerformed
+
+    private void jButtonConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultaActionPerformed
+        // TODO add your handling code here:
+        jPanelDetail.removeAll();
+        jPanelDetail.repaint();
+        jPanelDetail.revalidate();
+        jPanelDetail.add(jPanelConsulta);
+        jPanelDetail.repaint();
+        jPanelDetail.revalidate();
+        jFormattedTextFieldConsulta.requestFocus();
+    }//GEN-LAST:event_jButtonConsultaActionPerformed
+private String numberDocument;
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+       this.getContactbyId();                       
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTableConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableConsultaMouseClicked
+        // TODO add your handling code here:
+        //btnaddressActionPerformed(evt);
+        
+         int column = jTableConsulta.getColumnModel().getColumnIndexAtX(evt.getX()); // get the coloum of the button
+            int row    = evt.getY()/jTableConsulta.getRowHeight(); //get the row of the button
+
+                    /*Checking the row or column is valid or not*/
+            if (row < jTableConsulta.getRowCount() && row >= 0 && column < jTableConsulta.getColumnCount() && column >= 0) {
+                Object value = jTableConsulta.getValueAt(row, column);
+                if (value instanceof JButton) {
+                    /*perform a click event*/
+                    ((JButton)value).doClick();
+                    JButton button = (JButton) value;
+                     
+                     if(button.getName().equals("consultaContacto")){
+                         
+                         int rowSelected = jTableConsulta.getSelectedRow();
+                         int columnSelected = jTableConsulta.getSelectedColumn();
+                        // System.out.println("Test: "+Integer.parseInt(String.valueOf(jTableConsulta.getValueAt(rowSelected, 0))));
+                         //ObjectType o = (ObjectType)target.getValueAt(rowSelected, columnSelected) );
+                         
+                          DefaultTableModel modelAddress = (DefaultTableModel) jTableDirecciones.getModel();
+                         jTableDirecciones.setRowHeight(25);
+                          jTableDirecciones.setDefaultRenderer(Object.class, new Render());
+                          Object[] rowdataAddress = new Object[8];
+        ArrayList<AddressContact> listAddressCtrl = new ArrayList();
+         ServiceAddressContact serviceAddressContact = new ServiceAddressContact();
+        listAddressCtrl = serviceAddressContact.getAddressByIdContact(Integer.parseInt(String.valueOf(jTableConsulta.getValueAt(rowSelected, 0))));
+       // listAddressCtrl = this.getAddressByIdContact(2074782);
+        
+        for(int ini = 0; ini < listAddressCtrl.size(); ini++){
+            rowdataAddress[0] = listAddressCtrl.get(ini).getCodeperson();
+            rowdataAddress[1] = listAddressCtrl.get(ini).getAddressPrincipal();
+            rowdataAddress[2] = listAddressCtrl.get(ini).getAddressInter();
+            rowdataAddress[3] = listAddressCtrl.get(ini).getAddressRef();
+            rowdataAddress[4] = listAddressCtrl.get(ini).getNumberAddress();
+            rowdataAddress[5] = listAddressCtrl.get(ini).getAddressCity();
+            rowdataAddress[6] = listAddressCtrl.get(ini).getAddressType();          
+            rowdataAddress[7] =  jTableDirecciones.add(jButtonInfoFinance);             
+            modelAddress.addRow(rowdataAddress);}    
+                         
+                         
+                     }
+                     
+                }
+            }
+        
+    }//GEN-LAST:event_jTableConsultaMouseClicked
+
+    private void jTableDireccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDireccionesMouseClicked
+        // TODO add your handling code here:
+        int column = jTableDirecciones.getColumnModel().getColumnIndexAtX(evt.getX()); // get the coloum of the button
+            int row    = evt.getY()/jTableDirecciones.getRowHeight(); //get the row of the button
+             if (row < jTableDirecciones.getRowCount() && row >= 0 && column < jTableDirecciones.getColumnCount() && column >= 0) {
+                 Object value = jTableDirecciones.getValueAt(row, column);
+                 if (value instanceof JButton){
+                      ((JButton)value).doClick();
+                    JButton button = (JButton) value;
+                    if(button.getName().equals("infoFinanciera")){
+                        int rowSelected = jTableDirecciones.getSelectedRow();
+                         int columnSelected = jTableDirecciones.getSelectedColumn();
+                       // System.out.println("Test: "+Integer.parseInt(String.valueOf(jTableDirecciones.getValueAt(rowSelected, 0))));
+                       ArrayList<InformacionFinanciera> listProductsFinance = new ArrayList();
+                       ServiceProducts serviceProducts = new ServiceProducts();
+                       listProductsFinance = serviceProducts.getProducts(numberDocument);
+                       DefaultTableModel modelProductFinance = (DefaultTableModel) jTableProductoFinanciero.getModel();
+                       jTableProductoFinanciero.setRowHeight(25);
+                       Object[] rowdataProductFinance = new Object[1];
+                       for(int ini = 0; ini < listProductsFinance.size(); ini++){
+                        rowdataProductFinance[0] = listProductsFinance.get(ini).getDescripcionProducto();
+                        modelProductFinance.addRow(rowdataProductFinance);
+                       }
+                            DefaultPieDataset data = new DefaultPieDataset();
+        data.setValue("Tarjetas 1",43.2);
+        data.setValue("Otros Pagos 2",27.9);
+        data.setValue("Cuentas",79.5);
+        //Creamos un Chart
+       // ChartFactory.createPieChart3D(numberDocument, numberDocument, numberDocument, dataset, PlotOrientation.HORIZONTAL, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled)
+        JFreeChart chart = ChartFactory.createPieChart3D(
+                           "Analisis Comercial", //Títrulo del gráfico
+                           data,
+                           true,//Leyenda
+                           true,//ToolTips
+                           true);            
+ChartPanel Panel = new ChartPanel(chart);
+Panel.setMouseWheelEnabled(true);
+jPanelChart.setLayout(new java.awt.BorderLayout());
+jPanelChart.add(Panel,BorderLayout.CENTER);
+jPanelChart.validate();
+
+                    }
+                 }
+             }
+        
+    }//GEN-LAST:event_jTableDireccionesMouseClicked
+
+    private void jFormattedTextFieldConsultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldConsultaKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+          this.getContactbyId();
+        }
+    }//GEN-LAST:event_jFormattedTextFieldConsultaKeyPressed
+
     /**
      * Execute process.
      */
@@ -402,6 +789,49 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     
+     private void btnaddressActionPerformed(java.awt.event.ActionEvent evt) {    
+         if(evt.getActionCommand().equals("Direcciones")){
+                
+         
+         }
+         
+     }
+     
+     public boolean getContactbyId(){
+          ServiceContact serviceContact = new ServiceContact();
+        ArrayList<Contacto> listContacto = new ArrayList();
+        listContacto= serviceContact.getContactById(jFormattedTextFieldConsulta.getText());
+        jTableConsulta.setDefaultRenderer(Object.class, new Render());
+       // JButton btnaddress = new JButton("Direcciones");
+        DefaultTableModel model = (DefaultTableModel) jTableConsulta.getModel();
+        jTableConsulta.setRowHeight(25);
+        Object[] rowdata = new Object[8];
+        
+        for(int i = 0; i < listContacto.size(); i++){
+            rowdata[0] = listContacto.get(i).getCodigoPer();
+            numberDocument = listContacto.get(i).getNumeroIdentificacion();
+            rowdata[1] = numberDocument;            
+            rowdata[2] = listContacto.get(i).getPrimer_nombre()+" "+listContacto.get(i).getSegundo_nombre();
+            rowdata[3] = listContacto.get(i).getPrimer_apellido()+" "+listContacto.get(i).getSegundo_apellido();
+            rowdata[4] = listContacto.get(i).getEmail_primario();
+            rowdata[5] = listContacto.get(i).getCelular()==null?"N/A":listContacto.get(i).getCelular();
+            rowdata[6] = listContacto.get(i).getProfesion();
+            rowdata[7] =  jTableConsulta.add(btnaddress); 
+            
+            model.addRow(rowdata);}
+         return true;
+     }
+         
+     
+     public ArrayList<AddressContact> getAddressByIdContact(int idperson){
+         ArrayList<AddressContact> listAddress = null;        
+        ServiceAddressContact serviceAddressContact = new ServiceAddressContact();
+        serviceAddressContact.getAddressByIdContact(idperson);
+         return listAddress;
+     }
+     
+    
+    
     /**
      * Open pdf.
      *
@@ -433,7 +863,7 @@ public class MainWindow extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -459,28 +889,47 @@ public class MainWindow extends javax.swing.JFrame {
 
     /** The j button 2. */
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAbout;
+    private javax.swing.JButton jButtonConsulta;
     private javax.swing.JButton jButtonExecuteSearch;
+    private javax.swing.JButton jButtonFacturacion;
     private javax.swing.JButton jButtonMenuBuscar;
+    private javax.swing.JButton jButtonSendMail;
+    private javax.swing.JComboBox<String> jComboBoxTipo;
     private com.toedter.calendar.JDateChooser jDateChooserParam;
+    private javax.swing.JFormattedTextField jFormattedTextFieldConsulta;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanelAbout;
+    private javax.swing.JPanel jPanelChart;
+    private javax.swing.JPanel jPanelConsulta;
     private javax.swing.JPanel jPanelDashboard;
     private javax.swing.JPanel jPanelDetail;
     private javax.swing.JPanel jPanelHead;
     private javax.swing.JPanel jPanelMaster;
     private javax.swing.JPanel jPanelMenu;
+    private javax.swing.JPanel jPanelSendMail;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPanelPdfViewer;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSpinner jSpinnerParam;
+    private javax.swing.JTable jTableConsulta;
+    private javax.swing.JTable jTableDirecciones;
+    private javax.swing.JTable jTableProductoFinanciero;
+    private javax.swing.JTextField jTextFieldEmpresa;
     private javax.swing.JTextField jTextFieldPlaca;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }
